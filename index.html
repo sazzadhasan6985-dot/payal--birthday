@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Birthday 🎁</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Hind+Siliguri:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Hind Siliguri',system-ui,sans-serif;color:#fff;
+ background:linear-gradient(135deg,#0b4fb3 0%,#2a8cf0 55%,#cfe8ff 100%);position:relative}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;
+ background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);
+ background-size:28px 28px}
+.page{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;overflow-y:auto}
+.page.on{display:flex;animation:fade .6s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.glass{background:rgba(255,255,255,.2);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+ border:1px solid rgba(255,255,255,.4);border-radius:22px;box-shadow:0 12px 40px rgba(0,30,90,.35);padding:22px;width:min(92vw,440px)}
+h1,h2{font-family:'Pacifico',cursive;font-weight:400;text-shadow:0 0 14px rgba(255,255,255,.7)}
+.btn{border:0;cursor:pointer;background:#fff;color:#0b3d91;font:600 15px 'Hind Siliguri',sans-serif;
+ padding:10px 20px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.25);transition:transform .2s}
+.btn:hover{transform:scale(1.07)}
+.btn.pink{background:#ff4d8d;color:#fff}
+input{width:100%;padding:11px 14px;border-radius:12px;border:0;margin:14px 0 10px;font-size:16px;text-align:center;outline:none}
+.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-9px)}75%{transform:translateX(9px)}}
+.fl{position:fixed;bottom:-40px;pointer-events:none;z-index:5;animation:up linear forwards}
+@keyframes up{to{transform:translateY(-115vh) rotate(25deg);opacity:.2}}
+#gift{font-size:110px;cursor:pointer;animation:bounce 1s infinite}
+@keyframes bounce{50%{transform:translateY(-22px) scale(1.08)}}
+/* সাজানো পেজ */
+#banner{display:flex;gap:2px;font:700 clamp(22px,6.5vw,52px) 'Pacifico';margin:10px 0 24px;transform-origin:top;animation:sway 3s ease-in-out infinite;
+ filter:drop-shadow(2px 3px 0 rgba(0,0,0,.35));visibility:hidden}
+#banner.on{visibility:visible}
+@keyframes sway{50%{transform:rotate(1.6deg)}}
+#stage{position:relative;height:210px;width:min(94vw,520px);margin:6px 0}
+#cake{position:absolute;left:50%;bottom:0;transform:translateX(-50%);font-size:110px;display:none}
+#cake.on{display:block;animation:pop .6s}
+@keyframes pop{from{transform:translateX(-50%) scale(0)}}
+#flame{position:absolute;left:50%;top:-8px;transform:translateX(-50%);font-size:34px;animation:flick .25s infinite alternate}
+@keyframes flick{to{transform:translateX(-50%) scale(1.15) rotate(5deg)}}
+.balloon{position:absolute;bottom:0;font-size:44px;animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-14px)}}
+.row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:14px}
+/* চিঠি */
+#letter{text-align:left;font-size:16px;line-height:1.7;min-height:200px;white-space:pre-wrap;max-height:58vh;overflow-y:auto}
+/* গ্যালারি */
+#car{position:relative;width:min(92vw,520px);height:240px;perspective:900px;margin:14px 0}
+.card{position:absolute;left:50%;top:50%;width:170px;height:210px;margin:-105px 0 0 -85px;border-radius:14px;background:#fff;
+ box-shadow:0 8px 24px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:84px;overflow:hidden;transition:transform .9s}
+.card img{width:100%;height:100%;object-fit:cover}
+.sticker{font-size:140px;animation:bounce 1.4s infinite}
+.q{font:600 17px 'Hind Siliguri';margin:12px 0}
+#no{position:relative}
+</style>
+</head>
+<body>
+
+<!-- ১. পাসওয়ার্ড -->
+<div class="page on" id="p1">
+ <div class="glass">
+  <h2 style="font-size:24px">🎁 Enter Secret Password</h2>
+  <p style="font-size:14px;margin-top:6px">শুধু পায়েল এই গিফট খুলতে পারবে 💙</p>
+  <div style="font-size:64px;margin-top:8px">👩‍❤️‍👨</div>
+  <input id="pw" type="password" placeholder="পাসওয়ার্ড লিখো" autocomplete="off">
+  <button class="btn" style="width:100%" onclick="unlock()">Unlock 🎁</button>
+  <p id="hint" style="font-size:12px;margin-top:8px;opacity:.85"></p>
+ </div>
+</div>
+
+<!-- ২. গিফট বক্স -->
+<div class="page" id="p2"><div id="gift" onclick="go('p3')">🎁</div><p style="margin-top:10px">খুলতে গিফটে ট্যাপ করো</p></div>
+
+<!-- ৩. সাজানো -->
+<div class="page" id="p3">
+ <h2 style="font-size:22px">🎉 Let's Decorate 🎉</h2>
+ <div id="banner"></div>
+ <div id="stage"><div id="cake"><span id="flame">🔥</span>🎂</div></div>
+ <div class="row">
+  <button class="btn" onclick="showBanner()">Decorate Banner 🎀</button>
+  <button class="btn" onclick="addBalloons()">Add Balloons 🎈</button>
+  <button class="btn" onclick="addCake()">Add Cake 🍰</button>
+  <button class="btn" onclick="blow()">Blow Candle 🕯️</button>
+ </div>
+ <div class="row"><button class="btn pink" id="n3" style="display:none" onclick="go('p4')">Next ➜</button></div>
+</div>
+
+<!-- ৪. চিঠি -->
+<div class="page" id="p4">
+ <div class="glass" style="width:min(92vw,560px)">
+  <h2 style="font-size:26px;margin-bottom:12px">🎂 Happy Birthday 💖</h2>
+  <div id="letter"></div>
+  <div class="row"><button class="btn pink" id="n4" style="display:none" onclick="go('p5')">Next ➜</button></div>
+ </div>
+</div>
+
+<!-- ৫. ছবির গ্যালারি -->
+<div class="page" id="p5">
+ <h1 style="font-size:clamp(28px,8vw,44px)">Happy Birthday Day 💐</h1>
+ <p style="margin-top:4px">You're my today, tomorrow, and always 💕</p>
+ <div id="car"></div>
+ <h2 style="font-size:24px">💖 I Love You 💖</h2>
+ <div class="row"><button class="btn" onclick="go('p6')">Next ➜</button></div>
+</div>
+
+<!-- ৬. স্পেশাল মুহূর্ত -->
+<div class="page" id="p6">
+ <div class="glass" style="width:min(92vw,420px)">
+  <div class="sticker" id="stk">🥰</div>
+  <p class="q" id="cap"></p>
+ </div>
+ <div class="row"><button class="btn" onclick="go('p7')">Next ➜</button></div>
+</div>
+
+<!-- ৭. প্রশ্ন -->
+<div class="page" id="p7">
+ <div class="glass">
+  <h2 style="font-size:26px;color:#fff2a8">Question for u 💖</h2>
+  <div style="font-size:60px;margin:8px 0">🥺</div>
+  <p class="q" id="ques"></p>
+  <div class="row" style="min-height:48px">
+   <button class="btn pink" onclick="yes()">Yes 💗</button>
+   <button class="btn" id="no" onmouseover="dodge()" ontouchstart="dodge(event)" onclick="dodge()">No 💔</button>
+  </div>
+ </div>
+</div>
+
+<!-- ৮. শেষ পেজ -->
+<div class="page" id="p8">
+ <h1 style="font-size:clamp(34px,10vw,68px)">Happy Birthday<br><span id="nm">Payal</span> 💖</h1>
+ <p id="fin" style="margin-top:14px;font-size:18px"></p>
+ <p id="cd" style="margin-top:8px;font-size:17px;font-weight:600"></p>
+ <div style="font-size:70px;margin-top:10px">🎂🎈🎁</div>
+</div>
+
+<script>
+/* ============ ✏️ এখানে নিজের তথ্য বসাও ============ */
+const CONFIG = {
+  name: "Payal",
+  fullName: "Tasnova Farhana Payal",
+  bMonth: 11, bDay: 1,            // জন্মদিন: ১ নভেম্বর
+  password: "love",                 // গোপন পাসওয়ার্ড
+  hint: "শুধু পায়েলের জন্য 💙",
+  bannerText: "HAPPY BIRTHDAY",
+  letter:
+`🎂❤️ শুভ জন্মদিন, আমার প্রিয় স্ত্রী, আমার তাসনোভা ফারহানা পায়েল! ❤️🥹
+
+জানো পায়েল, আমাদের এই ৮ বছরের পথচলাটা শুধু একটা ভালোবাসার গল্প নয়, এটা হাজারো স্মৃতি, অসংখ্য কষ্ট, চোখের জল আর একে অপরকে হারিয়ে না ফেলার গল্প। 🥺❤️
+
+এই দীর্ঘ সময়ে তুমি আমার জন্য কতটা কষ্ট সহ্য করেছ, কত কিছু মুখ বুজে সহ্য করেছ, হয়তো আমি সবকিছু কখনো বুঝিয়ে বলতে পারব না। কিন্তু একটা কথা বিশ্বাস করো, তোমার প্রতিটা ত্যাগ, প্রতিটা অপেক্ষা আর আমার প্রতি তোমার ভালোবাসা আমার হৃদয়ে চিরকাল থেকে যাবে। 🫶🏻💗
+
+একসময় আমরা শুধু স্বপ্ন দেখতাম একসঙ্গে থাকার, আর আজ আলহামদুলিল্লাহ, সেই ভালোবাসা পূর্ণতা পেয়েছে। তুমি আজ শুধু আমার ভালোবাসার মানুষ নও, তুমি আমার স্ত্রী, আমার জীবনসঙ্গী, আমার ভবিষ্যৎ আর আমার ঘর। 💍❤️
+
+৮ বছর আগে তোমাকে ভালোবেসেছিলাম, আর আজ তোমাকে নিজের জীবনসঙ্গী হিসেবে পেয়ে বুঝেছি—আমার অপেক্ষাটা বৃথা ছিল না। 🥹🤍
+
+আমি জানি না ভবিষ্যতে আমাদের জীবনে কতটা সুখ কিংবা কতটা কঠিন সময় আসবে। তবে আমি চাই, প্রতিটা সুখে তোমার হাসির কারণ হতে, আর প্রতিটা কষ্টে তোমার সবচেয়ে নিরাপদ আশ্রয় হতে। তোমাকে আর কখনো একা কষ্ট পেতে দিতে চাই না। তোমার চোখে পানি এলে সেই পানির কারণ নয়, তোমার মুখে হাসি ফোটানোর মানুষ হতে চাই। 🥺🫂❤️
+
+পায়েল, তুমি আমার জীবনের এমন একটা অংশ, যাকে হারানোর ভয় নিয়ে নয়, বরং সারাজীবন আগলে রাখার স্বপ্ন নিয়ে বাঁচতে চাই। তোমার হাতটা যেভাবে আজ আমার হাতে আছে, ঠিক সেভাবেই যেন জীবনের শেষ দিন পর্যন্ত থাকে। 🤲🏻💖
+
+শুভ জন্মদিন, আমার ৮ বছরের ভালোবাসা, আমার অপেক্ষার পূর্ণতা, আমার আজকের সুখ আর আগামী দিনের স্বপ্ন—তাসনোভা ফারহানা পায়েল। 🎂🌸
+
+আল্লাহ যেন তোমাকে সুস্থ রাখেন, সুখে রাখেন, তোমার সব ভালো স্বপ্ন পূরণ করেন এবং আমাদের এই ছোট্ট ভালোবাসার সংসারটাকে রহমত, বিশ্বাস আর অফুরন্ত ভালোবাসায় ভরিয়ে দেন। আমিন। 🤲🏻❤️
+
+I LOVE YOU, MY WIFE, MY FOREVER LOVE! 🥹💋❤️
+
+আজ, আগামীকাল, আর জীবনের শেষ নিঃশ্বাস পর্যন্ত—তুমিই আমার প্রিয় মানুষ।
+৮ বছর তোমাকে ভালোবেসেছি, আর বাকি জীবনটাও শুধু তোমাকেই ভালোবেসে যেতে চাই। ♾️💍❤️‍🩹`,
+  // নিজের ছবির লিংক বা ফাইলের নাম দাও (যেমন "photo1.jpg"). ফাঁকা রাখলে ইমোজি দেখাবে
+  photos: ["", "", "", "", ""],
+  emojis: ["💑","🥰","💏","🌹","🎁"],
+  moments: [
+    {e:"🥰", t:"তোমার হাসিটাই আমার সবচেয়ে প্রিয়"},
+    {e:"🤗", t:"তোমার কাছে এলেই সব চিন্তা উধাও"}
+  ],
+  question: "তুমি কি আমার সাথে সারাজীবন থাকতে চাও? 😘",
+  finalText: "শুভ জন্মদিন, তাসনোভা ফারহানা পায়েল 💙"
+};
+/* =================================================== */
+
+const $ = id => document.getElementById(id);
+const rnd = (a,b) => Math.random()*(b-a)+a;
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));$(id).classList.add('on');
+  if(id==='p4')type();if(id==='p5')carousel();if(id==='p6')moment();if(id==='p7')$('ques').textContent=CONFIG.question;
+  if(id==='p8'){$('fin').textContent=CONFIG.finalText;$('nm').textContent=CONFIG.name;countdown();confetti(120)}}
+
+/* ভাসমান হৃদয়/ফুল */
+const icons=["💖","🌸","💙","🌹","✨","💗"];
+function floater(){const s=document.createElement('span');s.className='fl';s.textContent=icons[Math.floor(rnd(0,icons.length))];
+  s.style.left=rnd(0,98)+'vw';s.style.fontSize=rnd(14,30)+'px';s.style.animationDuration=rnd(6,12)+'s';
+  document.body.appendChild(s);setTimeout(()=>s.remove(),12500)}
+setInterval(floater,700);
+
+/* কনফেটি */
+function confetti(n){const c=['#ff4d8d','#ffd23f','#3bd16f','#fff','#7a5cff','#ff8a3d'];
+  for(let i=0;i<n;i++){const s=document.createElement('i');s.style.cssText=`position:fixed;top:-12px;left:${rnd(0,100)}vw;width:${rnd(6,11)}px;height:${rnd(8,16)}px;background:${c[i%6]};z-index:9;pointer-events:none;transition:transform ${rnd(2,4)}s linear,opacity 4s`;
+    document.body.appendChild(s);requestAnimationFrame(()=>{s.style.transform=`translate(${rnd(-150,150)}px,110vh) rotate(${rnd(200,900)}deg)`;s.style.opacity=.2});
+    setTimeout(()=>s.remove(),4500)}}
+
+/* জন্মদিন কাউন্টডাউন */
+function countdown(){const n=new Date(),t0=new Date(n.getFullYear(),n.getMonth(),n.getDate());
+  let b=new Date(n.getFullYear(),CONFIG.bMonth-1,CONFIG.bDay);if(b<t0)b.setFullYear(b.getFullYear()+1);
+  const d=Math.round((b-t0)/864e5);
+  $('cd').textContent=d===0?'🎉 আজই তোমার জন্মদিন! 🎉':`🎂 জন্মদিন আসতে আর ${d} দিন বাকি (${CONFIG.bDay} নভেম্বর)`}
+
+/* ১. আনলক */
+$('hint').textContent=CONFIG.hint;
+$('pw').addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});
+function unlock(){const v=$('pw').value.trim().toLowerCase();
+  if(v===CONFIG.password.toLowerCase()){go('p2')}
+  else{const g=document.querySelector('#p1 .glass');g.classList.remove('shake');void g.offsetWidth;g.classList.add('shake');$('pw').value=''}}
+
+/* ৩. সাজানো */
+function showBanner(){const b=$('banner');b.innerHTML='';const cols=['#ff3b3b','#ff9d00','#ffe600','#2ecc40','#00c2ff','#b266ff'];
+  [...CONFIG.bannerText].forEach((ch,i)=>{const s=document.createElement('span');s.textContent=ch===' '?'\u00A0':ch;s.style.color=cols[i%6];b.appendChild(s)});
+  b.classList.add('on');done3()}
+function addBalloons(){const st=$('stage'),em=['🎈','🎈','🎈'];
+  for(let i=0;i<9;i++){const b=document.createElement('span');b.className='balloon';b.textContent=em[0];
+    b.style.left=(i*11+rnd(0,4))+'%';b.style.bottom=rnd(0,90)+'px';b.style.animationDelay=rnd(0,2)+'s';b.style.filter=`hue-rotate(${i*40}deg)`;st.appendChild(b)}done3()}
+function addCake(){$('cake').classList.add('on');$('flame').style.display='block';done3()}
+function blow(){if(!$('cake').classList.contains('on'))addCake();$('flame').style.display='none';confetti(90);$('n3').style.display='inline-block'}
+function done3(){}
+
+/* ৪. টাইপরাইটার */
+let typing=false;
+function type(){if(typing)return;typing=true;const el=$('letter');el.textContent='';let i=0;
+  const ch=[...CONFIG.letter];const fin=()=>{clearInterval(t);el.textContent=CONFIG.letter;$('n4').style.display='inline-block'};
+  const t=setInterval(()=>{el.textContent+=ch[i++];el.scrollTop=el.scrollHeight;if(i>=ch.length)fin()},45);
+  el.onclick=fin}
+
+/* ৫. ক্যারোসেল */
+let rot=0,cTimer;
+function carousel(){const c=$('car');if(c.children.length)return;const n=CONFIG.photos.length;
+  CONFIG.photos.forEach((p,i)=>{const d=document.createElement('div');d.className='card';
+    d.innerHTML=p?`<img src="${p}" alt="">`:CONFIG.emojis[i%CONFIG.emojis.length];c.appendChild(d)});
+  const upd=()=>[...c.children].forEach((d,i)=>{d.style.transform=`rotateY(${i*360/n+rot}deg) translateZ(210px)`});
+  upd();cTimer=setInterval(()=>{rot-=1.2;upd()},40)}
+
+/* ৬. স্পেশাল মুহূর্ত */
+let mi=0;
+function moment(){const m=CONFIG.moments[mi%CONFIG.moments.length];mi++;$('stk').textContent=m.e;$('cap').textContent=m.t}
+
+/* ৭. প্রশ্ন */
+function dodge(e){if(e&&e.preventDefault)e.preventDefault();const b=$('no');
+  b.style.left=rnd(-110,110)+'px';b.style.top=rnd(-60,60)+'px'}
+function yes(){go('p8')}
+</script>
+</body>
+</html>
